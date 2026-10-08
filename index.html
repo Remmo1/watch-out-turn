@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Watch Out / Turn — LAN Arena</title>
+<style>
+:root{color-scheme:dark;--bg:#111212;--panel:#181a19;--line:#30332e;--ink:#f0f1e9;--muted:#a3a69b;--yellow:#edff49;--danger:#ff7777}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif}button,input,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.42}button,input,select{border-radius:3px}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--yellow);outline-offset:4px}header{height:88px;max-width:1512px;margin:auto;padding:0 36px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.brand{display:flex;gap:13px;align-items:center}.brand-icon{width:31px;height:31px;border:3px solid var(--yellow);border-left-color:transparent;transform:rotate(-22deg)}.brand h1{font-size:20px;letter-spacing:-.8px;margin:0;font-weight:900}.brand h1 span{color:var(--yellow)}.eyebrow,.label,.tag,.status,.micro{font-family:Consolas,Menlo,monospace;text-transform:uppercase;font-size:11px;letter-spacing:1.4px}.eyebrow{color:var(--muted);margin:5px 0 0}.header-right{display:flex;align-items:center;gap:20px}.tag{border:1px solid var(--line);padding:7px 10px;color:var(--muted)}.status{display:flex;align-items:center;gap:8px;letter-spacing:.6px;color:var(--muted)}.dot{width:7px;height:7px;background:var(--muted);border-radius:50%}.dot.online{background:var(--yellow)}main{max-width:1512px;margin:28px auto;padding:0 36px;display:grid;grid-template-columns:minmax(0,1fr) 306px;gap:26px}.arena-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.label{color:var(--muted)}.round{font:12px Consolas,Menlo,monospace;color:var(--yellow)}.arena-wrap{position:relative;background:#030504;border:2px solid var(--yellow);aspect-ratio:4/3;overflow:hidden;box-shadow:0 0 0 5px #171a12}canvas{width:100%;height:100%;display:block}.arena-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:22px;pointer-events:none;background:rgba(3,5,4,.18)}.arena-overlay[hidden]{display:none}.overlay-inner{max-width:520px;text-shadow:0 2px 18px #000}.overlay-kicker{font:11px Consolas,Menlo,monospace;letter-spacing:3px;color:var(--yellow)}.overlay-title{font-size:clamp(28px,5vw,74px);line-height:.95;letter-spacing:-3px;font-weight:900;margin:18px 0}.overlay-sub{font-size:14px;line-height:1.6;color:#d2d5c9;margin:0 auto;max-width:350px}.arena-footer{display:flex;justify-content:space-between;gap:12px;margin:16px 0;align-items:center}.controls-hint{font-size:12px;color:var(--muted);line-height:1.8}kbd{border:1px solid #484d41;padding:3px 6px;color:var(--ink);font:11px Consolas,monospace;border-radius:3px}.touch-controls{display:flex;gap:8px}.steer{height:44px;width:65px;background:var(--panel);border:1px solid #44483c;color:var(--ink);font-size:23px;touch-action:none;user-select:none}.steer:active,.steer.pressed{background:var(--yellow);color:#10120a;border-color:var(--yellow)}.rules{border-top:1px solid var(--line);padding-top:19px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.rule-no{color:var(--yellow);font:11px Consolas,monospace}.rule h3{font-size:13px;margin:9px 0 5px}.rule p{font-size:12px;line-height:1.6;color:var(--muted);margin:0}.sidebar{min-width:0}.panel{background:var(--panel);border:1px solid var(--line);padding:20px;margin-bottom:14px}.panel-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:17px}.panel-title h2{font-size:13px;margin:0}.badge{font:10px Consolas,monospace;color:var(--muted);border:1px solid #3d4037;padding:4px 6px}.input-label{font-size:12px;display:block;margin:0 0 8px;color:var(--muted)}input[type=text]{width:100%;padding:11px 12px;background:#10120f;border:1px solid #44483b;color:var(--ink);margin-bottom:12px}input::placeholder{color:#777d6d}.primary,.secondary{width:100%;padding:12px 14px;border:1px solid var(--yellow);background:var(--yellow);color:#13150b;font-size:13px;font-weight:700}.primary:hover:not(:disabled){background:#f5ff85}.secondary{background:transparent;color:var(--ink);border-color:#4c5142;margin-top:8px}.secondary:hover:not(:disabled){border-color:var(--yellow)}.small-copy{color:var(--muted);font-size:12px;line-height:1.6;margin:12px 0 0}.target{display:flex;gap:15px;align-items:center;margin-bottom:18px}.target-number{font-size:60px;line-height:1;font-weight:800;letter-spacing:-4px;color:var(--yellow)}.target-copy{font-size:12px;color:var(--muted);line-height:1.65}.players{list-style:none;margin:0;padding:0}.player{display:grid;grid-template-columns:13px minmax(0,1fr) auto;align-items:center;gap:9px;padding:12px 0;border-top:1px solid var(--line)}.swatch{height:8px;width:8px;border-radius:50%;background:var(--c)}.player-name{font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.player-meta{color:var(--muted);font:9px Consolas,monospace;letter-spacing:.4px;margin-top:4px}.player-score{font:22px Consolas,monospace;color:var(--c)}.empty{color:var(--muted);font-size:12px;line-height:1.7;padding:12px 0}.settings{display:grid;grid-template-columns:1fr 1fr;gap:13px 10px}.setting label{font-size:11px;color:var(--muted);display:block;margin-bottom:6px}select{background:#10120f;border:1px solid #44483b;color:var(--ink);width:100%;padding:9px;font-size:12px}select:disabled{opacity:.65}.check{grid-column:1/-1;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}input[type=checkbox]{accent-color:var(--yellow);width:15px;height:15px}.action-area{margin-top:17px}.session-info{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted);margin-bottom:10px}.text-button{padding:0;border:0;background:none;color:var(--muted);font-size:11px;text-decoration:underline}.text-button:hover{color:var(--yellow)}.error{font-size:12px;line-height:1.55;color:var(--danger);margin:12px 0 0}.error:empty{display:none}.network{padding:0 2px;color:var(--muted);font-size:11px;line-height:1.8;overflow-wrap:anywhere}.network strong{color:#d9ddce;font-weight:400}.network-line{display:flex;justify-content:space-between;gap:10px}.spectator-note{border-left:2px solid var(--yellow);padding-left:10px;margin-top:13px;color:var(--muted);font-size:12px;line-height:1.6}footer{max-width:1512px;margin:26px auto;padding:0 36px 26px;display:flex;justify-content:space-between;gap:12px;color:#7e8375;font:10px Consolas,monospace;letter-spacing:.5px}[hidden]{display:none!important}@media(max-width:1050px){main{padding:0 22px;gap:18px;grid-template-columns:minmax(0,1fr) 275px}header,footer{padding-left:22px;padding-right:22px}.panel{padding:16px}.rules{gap:12px}.overlay-title{font-size:50px}}@media(max-width:760px){header{height:76px}.tag{display:none}.brand h1{font-size:17px}.eyebrow{font-size:9px}.header-right{gap:8px}.status{font-size:9px}main{margin-top:20px;grid-template-columns:1fr;padding:0 16px}.sidebar{display:grid;grid-template-columns:1fr 1fr;gap:12px}.panel{margin:0}.network{grid-column:1/-1}.overlay-title{font-size:48px}.rules{margin-bottom:8px}footer{padding:0 16px 20px;font-size:9px}.controls-hint{font-size:11px}}@media(max-width:440px){.sidebar{grid-template-columns:1fr}.rules{gap:10px}.rule p{font-size:11px}.rule h3{font-size:12px}.overlay-title{font-size:38px}.overlay-sub{font-size:12px}.header-right .status{letter-spacing:0}.brand-icon{width:23px;height:23px}.brand{gap:9px}.touch-controls{gap:5px}.steer{width:52px}.arena-footer{align-items:flex-start}.target-number{font-size:52px}footer span:last-child{display:none}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+.power-panel{padding-top:16px}.power-legend{display:flex;gap:12px;flex-wrap:wrap;font:10px Consolas,monospace;margin-bottom:12px}.power-legend span{border-left:3px solid var(--pc);padding-left:6px}.power-readout{font-size:12px;line-height:1.6;color:var(--muted)}.effect-chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}.effect-chip{font:11px Consolas,monospace;border:1px solid #586247;color:#e4f3ca;padding:5px 7px}.power-event{min-height:32px;border-top:1px solid var(--line);padding-top:10px;font-size:12px;line-height:1.5;color:var(--yellow)}details{margin-top:12px}summary{cursor:pointer;font-size:12px;color:var(--ink);padding:5px 0}summary:focus-visible{outline:2px solid var(--yellow);outline-offset:3px}.power-guide{list-style:none;padding:0;margin:8px 0 0}.power-guide li{border-top:1px solid var(--line);padding:8px 0;font-size:11px;line-height:1.6;color:var(--muted)}.power-guide strong{color:var(--ink);font-size:12px}.scope-label{font:9px Consolas,monospace;margin-left:6px;text-transform:uppercase}
+.power-token{width:30px;height:30px;display:inline-block;vertical-align:middle;margin-right:7px}
+</style>
+</head>
+<body>
+<header><div class="brand"><div class="brand-icon" aria-hidden="true"></div><div><h1>WATCH OUT <span>/ TURN</span></h1><p class="eyebrow">A local-network survival arena</p></div></div><div class="header-right"><span class="tag">NO CLOUD. JUST CURVES.</span><span class="status"><span class="dot" id="connectionDot"></span><span id="connectionLabel">NOT CONNECTED</span></span></div></header>
+<main>
+<section aria-label="Game arena">
+<div class="arena-top"><span class="label" id="arenaLabel">THE ARENA / 01</span><span class="round" id="roundLabel">WAITING FOR PLAYERS</span></div>
+<div class="arena-wrap"><canvas id="arena" width="960" height="720" aria-label="Curve survival game. Steer with left/right arrow keys or A and D."></canvas><div class="arena-overlay" id="overlay"><div class="overlay-inner"><div class="overlay-kicker" id="overlayKicker">STEER. SURVIVE. REPEAT.</div><div class="overlay-title" id="overlayTitle">DON’T CROSS<br>THE LINE.</div><p class="overlay-sub" id="overlaySub">Join the arena, invite your network, or take on the bots. The last curve standing wins.</p></div></div></div>
+<div class="arena-footer"><div class="controls-hint"><kbd>←</kbd> <kbd>→</kbd> or <kbd>A</kbd> <kbd>D</kbd> to steer<br>You move automatically. Gaps are your way through.</div><div class="touch-controls" aria-label="Touch steering"><button class="steer" id="left" aria-label="Steer left" disabled>←</button><button class="steer" id="right" aria-label="Steer right" disabled>→</button></div></div>
+<div class="rules"><div class="rule"><span class="rule-no">01 / KEEP MOVING</span><h3>Two keys. No brakes.</h3><p>Hold left or right to bend your path. Release to go straight.</p></div><div class="rule"><span class="rule-no">02 / FIND THE GAP</span><h3>Every trail is a trap.</h3><p>Avoid walls and all trails, including your own. Slip through the gaps.</p></div><div class="rule"><span class="rule-no">03 / OUTLAST EVERYONE</span><h3>Survival earns points.</h3><p>One point per opponent you outlive. Reach the target and lead by two.</p></div></div>
+</section>
+<aside class="sidebar">
+<section class="panel" id="joinPanel"><div class="panel-title"><h2>Enter the arena</h2><span class="badge">LAN ONLY</span></div><form id="joinForm"><label class="input-label" for="playerName">Your player name</label><input id="playerName" type="text" maxlength="20" placeholder="Make a name for yourself" autocomplete="nickname" value="Player" required><button class="primary" id="joinButton" type="submit">Join game ↗</button></form><button class="secondary" id="spectateButton">Watch as spectator</button><p class="small-copy">The first player becomes host. No one else around? Bots will fill the empty seats.</p><p class="error" id="joinError" role="alert"></p></section>
+<section class="panel"><div class="panel-title"><h2 id="scoreHeading">The lineup</h2><span class="badge" id="seatBadge">0 / 8</span></div><div class="target"><div class="target-number" id="targetNumber">10</div><div class="target-copy">POINTS TO WIN<br>AND A 2-POINT LEAD</div></div><ol class="players" id="players"><li class="empty">Your crew goes here.<br>Join to open the lobby.</li></ol><div id="session" hidden><div class="action-area"><div class="session-info"><span id="roleLabel">Player</span><button class="text-button" id="leaveButton">Disconnect</button></div><button class="primary" id="readyButton">I’m ready</button><button class="secondary" id="startButton" hidden>Start match →</button><button class="secondary" id="lobbyButton" hidden>Return to lobby</button><p class="small-copy" id="lobbyHint"></p><p class="error" id="sessionError" role="alert"></p></div></div></section>
+<section class="panel"><div class="panel-title"><h2>Match setup</h2><span class="badge" id="hostBadge">HOST CONTROLS</span></div><div class="settings" id="settings"><div class="setting"><label for="slots">Arena seats</label><select id="slots" disabled><option>2</option><option>3</option><option>4</option><option>5</option><option selected>6</option><option>7</option><option>8</option></select></div><div class="setting"><label for="difficulty">Bot difficulty</label><select id="difficulty" disabled><option value="easy">Easy</option><option value="normal" selected>Normal</option><option value="hard">Hard</option></select></div><div class="setting"><label for="target">Winning score</label><select id="target" disabled><option>10</option><option>25</option><option>50</option></select></div><div class="setting"><label for="speed">Curve speed</label><select id="speed" disabled><option value="90">Relaxed</option><option value="115" selected>Classic</option><option value="145">Fast</option></select></div><label class="check"><input type="checkbox" id="fillBots" checked disabled>Fill empty seats with bots</label><label class="check"><input type="checkbox" id="powerups" checked disabled>Enable power-ups (6 types)</label></div><p class="small-copy">New players enter at the next round. Bots give up their seats between rounds.</p></section>
+<section class="panel power-panel"><div class="panel-title"><h2>Power-ups</h2><span class="badge" id="powerBadge">6 TYPES</span></div><div class="power-legend"><span style="--pc:#63f522">GREEN / YOU</span><span style="--pc:#ff6262">RED / OTHERS</span><span style="--pc:#5db8ff">BLUE / ALL</span></div><p class="power-readout" id="powerReadout">Drive over a token to activate it. No extra key needed.</p><div class="effect-chips" id="effectChips" aria-label="Your active power-ups"></div><div class="power-event" id="powerEvent" aria-live="polite" aria-atomic="true">Random starts. Random drops. Same bot skill.</div><details><summary>Power-up field guide</summary><ul class="power-guide" id="powerGuide"><li>Join the server to see the six effects. Rare drops: every 12–18 seconds, at most one token.</li></ul></details></section>
+<div class="network"><div class="network-line"><span>ROOM ADDRESS</span><button class="text-button" id="copyButton">Copy link</button></div><strong id="roomAddress">Start the Node.js server to connect.</strong><div class="network-line"><span id="latency">SERVER-OWNED SIMULATION</span><span>60 Hz</span></div><p id="networkTip">Open the host’s LAN address on each computer. localhost only works on the host.</p></div>
+</aside>
+</main><footer><span>WATCH OUT / TURN · BUILT FOR YOUR LOCAL NETWORK</span><span>UP TO 8 CURVES · HUMAN OR BOT</span></footer>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const canvas = $('arena'), ctx = canvas.getContext('2d');
+const trail = document.createElement('canvas'); trail.width = 960; trail.height = 720; const tc = trail.getContext('2d');
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let socket = null, me = null, token = null, joined = false, deliberate = false, reconnectTimer = null, attempts = 0, lastName = 'Player', spectator = false;
+let room = null, roster = new Map(), heads = [], previous = [], lastFrame = 0, remaining = 0, remainingAt = 0, drawHistory = false;
+let keys = new Set(), touch = new Set(), lastSteer = 0, scoreCache = '', roundKey = '', connecting = false;
+let items = [], powerCatalog = new Map(), iconCache = new Map(), previousById = new Map(), trailVersion = 0, effectCache = '';
+const powerColors = {self:'#63f522',others:'#ff6262',all:'#5db8ff'};
+function drawPowerToken(c, spec, x, y) {
+  const color=powerColors[spec.scope]; c.save(); c.translate(x,y);
+  c.fillStyle='#10170f';c.strokeStyle=color;c.lineWidth=2;c.lineCap='round';c.lineJoin='round';
+  c.beginPath();c.arc(0,0,13,0,Math.PI*2);c.fill();c.stroke();c.fillStyle=color;
+  if (spec.icon==='lightning') {
+    c.beginPath();c.moveTo(2,-10);c.lineTo(-7,2);c.lineTo(-1,2);c.lineTo(-3,10);c.lineTo(7,-3);c.lineTo(1,-3);c.closePath();c.fill();
+  } else if (spec.icon==='turtle') {
+    c.lineWidth=1.6;c.beginPath();c.ellipse(-1,0,6,4.5,0,0,Math.PI*2);c.stroke();
+    c.beginPath();c.moveTo(-1,-4);c.lineTo(-1,4);c.moveTo(-6,0);c.lineTo(4,0);c.stroke();
+    for(const [px,py,r] of [[7,0,2.5],[-4,-6,1.6],[2,-6,1.6],[-4,6,1.6],[2,6,1.6],[-8,0,1]]) {c.beginPath();c.arc(px,py,r,0,Math.PI*2);c.fill();}
+  } else if (spec.icon==='reverse') {
+    c.lineWidth=1.8;
+    for(let i=0;i<3;i++) {c.save();c.rotate(i*Math.PI*2/3);c.beginPath();c.moveTo(-6,-6);c.lineTo(4,-6);c.lineTo(7,-1);c.stroke();c.beginPath();c.moveTo(3,-2);c.lineTo(7,-1);c.lineTo(8,-5);c.stroke();c.restore();}
+  } else {c.font='bold 16px Arial';c.textAlign='center';c.fillText('W',0,5.5);}
+  c.restore();
+}
+function receivePowerState(m) {
+  items=m.items || [];
+  if (m.rebuild || m.trailVersion != null && m.trailVersion!==trailVersion) cleanTrail();
+  trailVersion=m.trailVersion || 0;
+  for (const event of m.events || []) $('powerEvent').textContent=event.text;
+}
+function updateEffects() {
+  const own=heads.find(h=>h.id===me), active=own?.alive ? (own.effects || []) : [];
+  const content=active.map(e=>({name:e.name,seconds:Math.ceil(e.remaining)}));
+  const stamp=JSON.stringify([content,room?.settings.powerups,room?.phase,own?.alive]);
+  if (stamp===effectCache) return; effectCache=stamp;
+  $('effectChips').replaceChildren();
+  for (const effect of content) { const chip=document.createElement('span'); chip.className='effect-chip'; chip.textContent=effect.name+' '+effect.seconds+'s'; $('effectChips').append(chip); }
+  $('powerBadge').textContent=room?.settings.powerups===false ? 'OFF' : '6 TYPES';
+  $('powerReadout').textContent=room?.settings.powerups===false ? 'Power-ups are disabled by the host.' : own && !own.alive ? 'You’re out this round. Watch for the next random start.' : 'Rare drops: every 12–18s, at most one token. Drive over it to activate.';
+}
+function showPowerGuide(catalog) {
+  powerCatalog=new Map((catalog || []).map(p=>[p.kind,p]));
+  if (!powerCatalog.size) return;
+  $('powerGuide').replaceChildren(); iconCache.clear();
+  for (const p of powerCatalog.values()) {
+    const sprite=document.createElement('canvas');sprite.width=36;sprite.height=36;drawPowerToken(sprite.getContext('2d'),p,18,18);iconCache.set(p.kind,sprite);
+    const li=document.createElement('li'), title=document.createElement('strong'), scope=document.createElement('span'), text=document.createElement('div');
+    sprite.className='power-token';sprite.setAttribute('role','img');sprite.setAttribute('aria-label',p.name+' / '+p.scope);
+    title.textContent=p.name; scope.className='scope-label'; scope.style.color=powerColors[p.scope];
+    scope.textContent=(p.scope==='self'?'you':p.scope==='others'?'rivals':'everyone')+' / '+p.duration+'s';
+    text.textContent=p.description; li.append(sprite,title,scope,text); $('powerGuide').append(li);
+  }
+}
+const validServer = ['http:', 'https:'].includes(location.protocol);
+function cleanTrail() { tc.fillStyle = '#030504'; tc.fillRect(0, 0, 960, 720); }
+cleanTrail();
+function decoration() {
+  cleanTrail();
+  const curves = [ ['#63f522',[[60,230],[130,140],[220,190],[290,60]]], ['#00e5df',[[655,60],[765,50],[680,240],[865,220]]], ['#ff32cb',[[95,610],[225,650],[190,520],[340,580]]], ['#ffab19',[[750,570],[840,640],[845,485],[925,495]]] ];
+  tc.lineWidth = 5; tc.lineCap = 'round';
+  for (const [color,p] of curves) { tc.strokeStyle = color; tc.globalAlpha = .65; tc.beginPath(); tc.moveTo(...p[0]); tc.bezierCurveTo(...p[1],...p[2],...p[3]); tc.stroke(); }
+  tc.globalAlpha = 1;
+}
+decoration();
+function showError(text) { $(joined ? 'sessionError' : 'joinError').textContent = text; }
+function connection(label, online) { $('connectionLabel').textContent = label; $('connectionDot').classList.toggle('online', online); }
+function send(m) { if (socket?.readyState === WebSocket.OPEN) socket.send(JSON.stringify(m)); }
+function addSegments(segments) {
+  tc.lineWidth = 5; tc.lineCap = 'round'; tc.lineJoin = 'round';
+  for (const s of segments || []) { tc.lineWidth=s[5] || 5; tc.strokeStyle = roster.get(s[0])?.color || '#eeeeee'; tc.beginPath(); tc.moveTo(s[1],s[2]); tc.lineTo(s[3],s[4]); tc.stroke(); }
+}
+function setHeads(next) {
+  const now = performance.now(); previous = heads; previousById=new Map(heads.map(h=>[h.id,h])); heads = next || []; lastFrame = now;
+  if (!previous.length) previous = heads;
+}
+function connect(asSpectator = false, resume = false) {
+  if (connecting || socket?.readyState === WebSocket.OPEN) return;
+  if (!validServer) { showError('This is the client preview. Extract the project and run “npm start”, then open http://localhost:3000.'); return; }
+  connecting = true; deliberate = false; spectator = asSpectator; lastName = $('playerName').value.trim() || 'Player';
+  $('joinButton').disabled = true; $('spectateButton').disabled = true; $('joinError').textContent = ''; connection('CONNECTING', false);
+  const ws = new WebSocket((location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host + '/ws'); socket = ws;
+  ws.addEventListener('open', () => send({type:'join',name:lastName,spectator,token:resume ? token : null}));
+  ws.addEventListener('message', event => {
+    let m; try { m = JSON.parse(event.data); } catch { return; }
+    if (m.type === 'welcome') {
+      me = m.id; token = m.token; showPowerGuide(m.powerCatalog); joined = true; connecting = false; attempts = 0; connection('CONNECTED', true);
+      $('joinPanel').hidden = true; $('session').hidden = false; $('sessionError').textContent = ''; return;
+    }
+    if (m.type === 'room') { room = m; remaining = m.remaining; remainingAt = performance.now(); updateUI(); return; }
+    if (m.type === 'reset' || m.type === 'sync') {
+      roster = new Map(m.players.map(p => [p.id,p])); cleanTrail(); receivePowerState(m); heads = []; previous = []; setHeads(m.heads); addSegments(m.segments); drawHistory = true; roundKey = ''; if (m.type==='reset') $('powerEvent').textContent='New round. New positions and directions.'; updateScores(); updateEffects(); return;
+    }
+    if (m.type === 'state') { receivePowerState(m); addSegments(m.segments); setHeads(m.heads); remaining = m.remaining; remainingAt = performance.now(); if (room) room.phase = m.phase; updateScores(); updateEffects(); updateOverlay(); return; }
+    if (m.type === 'clear') { heads = []; previous = []; items=[]; trailVersion=0; roster.clear(); drawHistory = false; decoration(); updateEffects(); return; }
+    if (m.type === 'error') { showError(m.message); if (!joined) ws.close(); return; }
+    if (m.type === 'pong' && typeof m.stamp === 'number') $('latency').textContent = Math.max(0,Math.round(performance.now()-m.stamp)) + ' MS ROUND TRIP';
+  });
+  ws.addEventListener('error', () => showError('Cannot reach the game server. Check the host’s address, server, firewall, and network.'));
+  ws.addEventListener('close', () => {
+    connecting = false; keys.clear(); touch.clear(); lastSteer = 0; $('left').disabled = true; $('right').disabled = true;
+    $('joinButton').disabled = false; $('spectateButton').disabled = false; connection(deliberate ? 'DISCONNECTED' : 'CONNECTION LOST', false);
+    if (!deliberate && joined && attempts < 5) {
+      attempts++; showError('Connection lost. Reconnecting… ('+attempts+'/5)'); reconnectTimer = setTimeout(() => connect(spectator,true), Math.min(1000 * attempts,3000));
+    } else {
+      joined = false; $('joinPanel').hidden = false; $('session').hidden = true;
+      if (!deliberate) showError('Connection unavailable. Start the server or check the network, then join again.');
+      room = null; heads = []; token = null; drawHistory = false; items=[]; trailVersion=0; decoration(); updateEffects(); updateUI();
+    }
+  });
+}
+function updateScores() {
+  if (!room) return;
+  const scoreMap = new Map(heads.map(h => [h.id,h.score]));
+  const list = [...room.players].map(p => ({...p,score:scoreMap.get(p.id) ?? p.score}));
+  if (room.phase !== 'lobby') list.sort((a,b) => b.score-a.score);
+  const stamp = JSON.stringify([list,me,room.hostId,room.phase,[...roster.keys()],heads.map(h=>[h.id,h.alive])]);
+  if (scoreCache === stamp) return; scoreCache = stamp;
+  $('players').replaceChildren();
+  for (const p of list) {
+    const li = document.createElement('li'); li.className = 'player'; li.style.setProperty('--c',p.color);
+    const swatch = document.createElement('span'); swatch.className = 'swatch'; swatch.setAttribute('aria-hidden','true');
+    const detail = document.createElement('div'), n = document.createElement('div'), meta = document.createElement('div');
+    n.className = 'player-name'; n.textContent = p.name + (p.id === me ? ' (you)' : ''); meta.className = 'player-meta';
+    const tags = [p.bot ? 'BOT' : p.connected ? 'HUMAN' : 'OFFLINE'];
+    if (p.id === room.hostId) tags.push('HOST');
+    if (room.phase === 'lobby') tags.push(p.ready ? 'READY' : 'NOT READY');
+    else if (!roster.has(p.id)) tags.push('NEXT ROUND');
+    else if (heads.find(h => h.id === p.id)?.alive === false) tags.push('OUT');
+    meta.textContent = tags.join(' / '); detail.append(n,meta);
+    const score = document.createElement('span'); score.className = 'player-score'; score.textContent = p.score; li.append(swatch,detail,score); $('players').append(li);
+  }
+  if (!list.length) { const li = document.createElement('li'); li.className = 'empty'; li.textContent = 'Waiting for the first player.'; $('players').append(li); }
+  $('seatBadge').textContent = room.phase === 'lobby' ? list.length + ' / 8' : roster.size + ' IN ARENA';
+}
+function updateUI() {
+  const mine = room?.players.find(p => p.id === me), host = !!me && room?.hostId === me, lobby = room?.phase === 'lobby';
+  $('readyButton').hidden = !mine || !lobby; $('readyButton').textContent = mine?.ready ? '✓ Ready — click to unready' : 'I’m ready';
+  $('readyButton').disabled = !joined || socket?.readyState !== WebSocket.OPEN;
+  $('startButton').hidden = !host || !lobby;
+  $('startButton').disabled = !joined || socket?.readyState !== WebSocket.OPEN || (room?.players.length || 0) < 2 || room?.players.some(p => !p.bot && p.connected && !p.ready);
+  $('lobbyButton').hidden = !host || !['roundEnd','matchEnd'].includes(room?.phase);
+  $('roleLabel').textContent = host ? 'You are the host' : mine ? 'You are a player' : 'Spectator mode';
+  $('lobbyHint').textContent = !room ? '' : lobby ? (host ? 'Ready up, then start when everyone is ready.' : mine ? 'Ready up. The host starts the match.' : 'Watching the lobby. Disconnect to join as a player.') : !roster.has(me) && mine ? 'You’ll enter at the next round.' : room.phase === 'matchEnd' ? 'The host can return everyone to the lobby.' : 'Stay sharp. The next round starts automatically.';
+  $('hostBadge').textContent = host ? 'YOU ARE HOST' : 'HOST CONTROLS';
+  for (const el of $('settings').querySelectorAll('select,input')) el.disabled = !host || !lobby;
+  if (room) {
+    for (const id of ['slots','difficulty','target','speed']) $(id).value = room.settings[id]; $('fillBots').checked = room.settings.fillBots; $('powerups').checked=room.settings.powerups!==false; updateEffects();
+    $('targetNumber').textContent = room.settings.target; $('scoreHeading').textContent = lobby ? 'The lineup' : 'Scoreboard';
+    $('roundLabel').textContent = lobby ? 'LOBBY OPEN' : 'ROUND ' + String(room.round).padStart(2,'0') + ' / ' + (room.phase === 'matchEnd' ? 'MATCH OVER' : room.phase === 'roundEnd' ? 'ROUND OVER' : room.phase === 'countdown' ? 'GET READY' : 'LIVE');
+    updateScores();
+  } else { $('roundLabel').textContent = 'WAITING FOR PLAYERS'; $('players').innerHTML = '<li class="empty">Your crew goes here.<br>Join to open the lobby.</li>'; scoreCache = ''; $('seatBadge').textContent = '0 / 8'; }
+  updateOverlay();
+}
+function updateOverlay() {
+  const phase = room?.phase, timer = Math.max(0, remaining - (performance.now()-remainingAt)/1000);
+  const activeMe = heads.find(h => h.id === me), steering = !!joined && phase === 'playing' && activeMe?.alive === true && socket?.readyState === WebSocket.OPEN;
+  $('left').disabled = !steering; $('right').disabled = !steering;
+  $('overlay').hidden = phase === 'playing';
+  if (phase === 'playing') return;
+  let kicker = 'STEER. SURVIVE. REPEAT.', title = 'DON’T CROSS\nTHE LINE.', sub = 'Join the arena, invite your network, or take on the bots. The last curve standing wins.';
+  if (phase === 'lobby') { kicker = 'YOUR NETWORK. YOUR ARENA.'; title = 'READY TO\nMAKE A TURN?'; sub = 'Ready up in the lobby. The host starts the match when everyone is set.'; }
+  else if (phase === 'countdown') { kicker = 'ROUND ' + room.round + ' / FIND YOUR COLOR'; title = String(Math.max(1,Math.ceil(timer))); sub = activeMe ? 'You are ' + (roster.get(me)?.name || 'a player') + '. Use ← → or A / D.' : 'You’re watching this round.'; }
+  else if (phase === 'roundEnd') { kicker = 'ROUND COMPLETE'; title = room.result || 'ROUND OVER'; sub = 'Next round in ' + Math.ceil(timer) + ' seconds. New players take their seats now.'; }
+  else if (phase === 'matchEnd') { kicker = 'TARGET REACHED / TWO-POINT LEAD'; title = room.result || 'MATCH OVER'; sub = 'Good curves. Great company. The host can open a new match.'; }
+  $('overlay').hidden = phase === 'playing';
+  const key = [kicker,title,sub].join('|'); if (key !== roundKey) {
+    $('overlayKicker').textContent = kicker; $('overlayTitle').textContent = title; $('overlayTitle').style.whiteSpace = 'pre-line'; $('overlaySub').textContent = sub; roundKey = key;
+    $('overlayTitle').style.fontSize = title.length > 24 ? 'clamp(24px, 3.5vw, 46px)' : '';
+  }
+}
+function draw(now) {
+  ctx.drawImage(trail,0,0);
+  if (drawHistory) for (const item of items) {
+    const sprite=iconCache.get(item.kind); if (sprite) ctx.drawImage(sprite,item.x-18,item.y-18);
+  }
+  if (drawHistory) {
+    const alpha = reducedMotion ? 1 : Math.min(1,(now-lastFrame)/50), prev = previousById;
+    for (const h of heads) {
+      const p = prev.get(h.id) || h, snap=h.teleport || Math.hypot(h.x-p.x,h.y-p.y)>100, x = snap?h.x:p.x+(h.x-p.x)*alpha, y = snap?h.y:p.y+(h.y-p.y)*alpha;
+      const color = roster.get(h.id)?.color || '#fff';
+      if (!h.alive) { ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x-5,y-5); ctx.lineTo(x+5,y+5); ctx.moveTo(x+5,y-5); ctx.lineTo(x-5,y+5); ctx.stroke(); continue; }
+      if (h.id === me) { ctx.strokeStyle = color; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(x,y,11,0,Math.PI*2); ctx.stroke(); }
+      ctx.fillStyle = '#edff49'; ctx.beginPath(); ctx.arc(x,y,Math.max(2.5,h.radius || 4),0,Math.PI*2); ctx.fill();
+      if (room?.phase === 'countdown') {
+        const fx=x+Math.cos(h.angle)*24,fy=y+Math.sin(h.angle)*24;ctx.strokeStyle=color;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(fx,fy);ctx.moveTo(fx-Math.cos(h.angle-.55)*8,fy-Math.sin(h.angle-.55)*8);ctx.lineTo(fx,fy);ctx.lineTo(fx-Math.cos(h.angle+.55)*8,fy-Math.sin(h.angle+.55)*8);ctx.stroke();
+        ctx.fillStyle = color; ctx.font = 'bold 15px Arial'; ctx.textAlign = 'center'; ctx.fillText(roster.get(h.id)?.name || '',x,y-25);
+      }
+    }
+  }
+  if (room?.phase==='countdown' || room?.phase==='roundEnd') updateOverlay();
+  requestAnimationFrame(draw);
+}
+function steer() {
+  const left = keys.has('ArrowLeft') || keys.has('a') || touch.has('left'), right = keys.has('ArrowRight') || keys.has('d') || touch.has('right');
+  const value = left === right ? 0 : left ? -1 : 1;
+  $('left').classList.toggle('pressed',left); $('right').classList.toggle('pressed',right);
+  if (value !== lastSteer) { lastSteer = value; send({type:'input',steer:value}); }
+}
+window.addEventListener('keydown',e => { if (['INPUT','SELECT','TEXTAREA','BUTTON'].includes(e.target.tagName)) return; const k = e.key.length === 1 ? e.key.toLowerCase() : e.key; if (['ArrowLeft','ArrowRight','a','d'].includes(k)) { e.preventDefault(); keys.add(k); steer(); } });
+window.addEventListener('keyup',e => { keys.delete(e.key.length === 1 ? e.key.toLowerCase() : e.key); steer(); });
+function release() { keys.clear(); touch.clear(); steer(); send({type:'input',steer:0}); }
+window.addEventListener('blur',release); document.addEventListener('visibilitychange',() => { if (document.hidden) release(); });
+for (const dir of ['left','right']) { const button = $(dir); button.addEventListener('pointerdown',e => { e.preventDefault(); button.setPointerCapture(e.pointerId); touch.add(dir); steer(); }); for (const event of ['pointerup','pointercancel','lostpointercapture']) button.addEventListener(event,() => { touch.delete(dir); steer(); }); }
+$('joinForm').addEventListener('submit',e => { e.preventDefault(); connect(false); }); $('spectateButton').addEventListener('click',() => connect(true));
+$('readyButton').addEventListener('click',() => { send({type:'ready',ready:!room?.players.find(p => p.id === me)?.ready}); $('readyButton').blur(); });
+$('startButton').addEventListener('click',() => { send({type:'start'}); $('startButton').blur(); }); $('lobbyButton').addEventListener('click',() => send({type:'lobby'}));
+$('leaveButton').addEventListener('click',() => { deliberate = true; clearTimeout(reconnectTimer); token = null; release(); socket?.close(); });
+$('settings').addEventListener('change',() => send({type:'settings',slots:Number($('slots').value),difficulty:$('difficulty').value,target:Number($('target').value),speed:Number($('speed').value),fillBots:$('fillBots').checked,powerups:$('powerups').checked}));
+$('copyButton').addEventListener('click',async () => { if (!validServer) return showError('Run the server first to get a room address.'); try { await navigator.clipboard.writeText(location.origin); $('copyButton').textContent = 'Copied'; setTimeout(() => $('copyButton').textContent = 'Copy link',1800); } catch { showError('Copy the room address shown below. Clipboard access may be unavailable over LAN HTTP.'); } });
+if (validServer) { $('roomAddress').textContent = location.origin; if (['localhost','127.0.0.1','[::1]'].includes(location.hostname)) $('networkTip').textContent = 'For other computers, share the LAN address printed in the server terminal—not this localhost link.'; }
+setInterval(() => { if (joined && room?.phase === 'playing') send({type:'input',steer:lastSteer}); },150);
+setInterval(() => { if (joined) send({type:'ping',stamp:performance.now()}); },2500);
+requestAnimationFrame(draw);
+</script>
+</body>
+</html>

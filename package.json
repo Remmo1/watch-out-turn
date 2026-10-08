@@ -1,0 +1,14 @@
+{
+  "name": "watch-out-turn",
+  "version": "1.2.0",
+  "private": true,
+  "description": "Self-hosted LAN curve-survival game with server-side bots",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test game.test.js powerups.test.js server.test.js client.test.js"
+  },
+  "license": "UNLICENSED"
+}
