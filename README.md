@@ -4,6 +4,8 @@
 
 The game now contains **only the six requested power-ups**. All other effects have been removed from the item pool and effect handlers, not just hidden in the interface.
 
+![Watch out turn demo](./watch-out-turn.gif)
+
 | Effect | Icon and color | Target | Duration |
 | --- | --- | --- | --- |
 | Increase speed for me | Green lightning bolt | Collector | 3 seconds |
